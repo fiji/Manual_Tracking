@@ -29,6 +29,13 @@
 		</dependency>
 	</dependencies>
 
+	<scm>
+		<connection>scm:git:git://github.com/fiji/Manual_Tracking</connection>
+		<developerConnection>scm:git:git@github.com:fiji/Manual_Tracking</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/fiji/Manual_Tracking</url>
+	</scm>
+
 	<repositories>
 		<!-- NB: for project parent, in case of partial checkout -->
 		<repository>
