@@ -1,7 +1,6 @@
 package adapter;
 
 import i5d.Image5D;
-
 import ij.ImagePlus;
 
 public class Image5DAdapter extends ImageAdapter {

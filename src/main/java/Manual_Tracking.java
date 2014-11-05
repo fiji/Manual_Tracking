@@ -9,25 +9,53 @@ Previous track files may be reloaded
 
 import adapter.Image5DAdapter;
 import adapter.ImageAdapter;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.SystemColor;
-import java.io.*;
-import java.lang.*;
-import java.util.StringTokenizer;
-import ij.*;
-import ij.gui.*;
-import ij.io.*;
-import ij.measure.*;
-import ij.plugin.Converter;
-import ij.plugin.frame.*;
-import ij.plugin.filter.*;
+import ij.IJ;
+import ij.ImagePlus;
+import ij.ImageStack;
+import ij.WindowManager;
+import ij.gui.GenericDialog;
+import ij.gui.ImageCanvas;
+import ij.gui.ImageWindow;
+import ij.gui.NewImage;
+import ij.gui.OvalRoi;
+import ij.gui.PolygonRoi;
+import ij.gui.Roi;
+import ij.io.OpenDialog;
+import ij.io.Opener;
+import ij.io.SaveDialog;
+import ij.measure.ResultsTable;
 import ij.plugin.filter.Duplicater;
-import ij.process.*;
+import ij.plugin.frame.PlugInFrame;
+import ij.process.ImageProcessor;
 import ij.process.StackConverter;
-import ij.util.*;
-import ij.util.Tools.*;
+import ij.util.Tools;
+
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Checkbox;
+import java.awt.Choice;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.Panel;
+import java.awt.SystemColor;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
 
 
 
