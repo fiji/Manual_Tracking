@@ -18,6 +18,25 @@
 	<name>plugins/Manual_Tracking.jar</name>
 	<description></description>
 
+	<scm>
+		<connection>scm:git:git://github.com/fiji/Manual_Tracking</connection>
+		<developerConnection>scm:git:git@github.com:fiji/Manual_Tracking</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/fiji/Manual_Tracking</url>
+	</scm>
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>http://jenkins.imagej.net/job/Manual_Tracking/</url>
+	</ciManagement>
+
+	<repositories>
+		<!-- NB: for project parent -->
+		<repository>
+			<id>imagej.public</id>
+			<url>http://maven.imagej.net/content/groups/public</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<!-- ImageJ dependencies -->
 		<dependency>
@@ -29,25 +48,5 @@
 			<artifactId>Image_5D</artifactId>
 		</dependency>
 	</dependencies>
-
-	<ciManagement>
-		<system>Jenkins</system>
-		<url>http://jenkins.imagej.net/job/Manual_Tracking/</url>
-	</ciManagement>
-
-	<scm>
-		<connection>scm:git:git://github.com/fiji/Manual_Tracking</connection>
-		<developerConnection>scm:git:git@github.com:fiji/Manual_Tracking</developerConnection>
-		<tag>HEAD</tag>
-		<url>https://github.com/fiji/Manual_Tracking</url>
-	</scm>
-
-	<repositories>
-		<!-- NB: for project parent -->
-		<repository>
-			<id>imagej.public</id>
-			<url>http://maven.imagej.net/content/groups/public</url>
-		</repository>
-	</repositories>
 
 </project>
