@@ -313,7 +313,7 @@ public class Manual_Tracking extends PlugInFrame implements ActionListener, Item
         instance=this;
 
         try {
-		Class.forName("i5d.gui.Image5DWindow");
+		Class.forName("sc.fiji.i5d.gui.Image5DWindow");
 		adapter = new Image5DAdapter();
         } catch (ClassNotFoundException e) {
 		adapter = new ImageAdapter();
