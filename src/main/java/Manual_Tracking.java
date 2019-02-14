@@ -938,7 +938,7 @@ public class Manual_Tracking extends PlugInFrame implements ActionListener, Item
                 in.readLine();
                 while ((line=in.readLine())!=null){
                     i=0;
-                    Token=new StringTokenizer(line);
+                    Token=new StringTokenizer(line, ",");
                     rt.incrementCounter();
                     while (Token.hasMoreTokens()){
                         if (i!=0){
