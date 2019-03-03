@@ -167,6 +167,7 @@ public class Manual_Tracking extends PlugInFrame implements ActionListener, Item
     //Tracking related variables------------------------------------------------
     boolean islistening=false; //True as long as the user is tracking
     
+    double Angle; // Angle of the movement (prevx, prevy) -> (ox, oy). In degrees between 0 and 360, trigonometric/anti-clockwise orientation
     int[] xRoi; //Defines the ROI to be shown using the 'Show path' option - x coordinates
     int[] yRoi; //Defines the ROI to be shown using the 'Show path' option - y coordinates
     Roi roi; //ROI
@@ -212,7 +213,7 @@ public class Manual_Tracking extends PlugInFrame implements ActionListener, Item
     //Results tables------------------------------------------------------------
     ResultsTable rt; //2D results table
     ResultsTable rtmp; // Temporary results table
-    String[] head={"Track n°","Slice n°","X","Y","Distance","Velocity","Pixel Value"}; //2D results table's headings
+    String[] head={"Track n°","Slice n°","X","Y","Distance","Velocity","Pixel Value","Orientation(deg)"}; //2D results table's headings
     ResultsTable rt3D; //3D results table
     
     //Load Previous Track File related variables--------------------------------
@@ -313,10 +314,10 @@ public class Manual_Tracking extends PlugInFrame implements ActionListener, Item
         instance=this;
 
         try {
-		Class.forName("sc.fiji.i5d.gui.Image5DWindow");
-		adapter = new Image5DAdapter();
+        Class.forName("sc.fiji.i5d.gui.Image5DWindow");
+        adapter = new Image5DAdapter();
         } catch (ClassNotFoundException e) {
-		adapter = new ImageAdapter();
+        adapter = new ImageAdapter();
         }
 
         //Interface setup ------------------------------------------------------
@@ -1212,22 +1213,36 @@ public class Manual_Tracking extends PlugInFrame implements ActionListener, Item
         xRoi[NbPoint-1]=ox;
         yRoi[NbPoint-1]=oy;
         
-        
+        // Compute Distance, Velocity and Orientation
         if (NbPoint==1){
             Distance=-1;
             Velocity=-1;
-        } else {
+        } 
+        else {
             Distance=calxy*Math.sqrt(Math.pow((ox-prevx),2)+Math.pow((oy-prevy),2));
             Velocity=Distance/calt;
+            
+            // Orientation
+            double dx = ox-prevx;
+            double dy = -(oy-prevy); // - sign to have the y pointing up, such that the angle value is what is seen on the image, using trigonometric/anti-clockwise angle orientation
+            Angle = Math.atan2(dy, dx);
+            if (Angle<0){ 
+                Angle = Angle + 2*Math.PI; // return only positive angles [0;360] degrees [0;2pi] radians
+            }
+            Angle = Math.toDegrees(Angle);
+            rt.addValue("Orientation(deg)", Angle); // Add to table before incrementing counter (the orientation is calculated for the previous timepoint)
         }
         
         if (checkRef.getState()) Directionnality();
         
         PixVal=img.getProcessor().getPixel(ox,oy);
         
+        // Add to result table
         rt.incrementCounter();
         double[] doub={Nbtrack,(img.getCurrentSlice()),ox,oy,Distance,Velocity,PixVal};
         for (i=0; i<doub.length; i++) rt.addValue(i,doub[i]);
+        
+        // Show/Update result table
         rt.show("Results from "+imgtitle+" in "+choicecalxy.getItem(choicecalxy.getSelectedIndex())+" per "+choicecalt.getItem(choicecalt.getSelectedIndex()));
         
         if (getPosition(img) < getMaxPosition(img)) {
