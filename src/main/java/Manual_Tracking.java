@@ -1222,15 +1222,15 @@ public class Manual_Tracking extends PlugInFrame implements ActionListener, Item
             Distance=calxy*Math.sqrt(Math.pow((ox-prevx),2)+Math.pow((oy-prevy),2));
             Velocity=Distance/calt;
             
-            // Orientation
-            double dx = ox-prevx;
-            double dy = -(oy-prevy); // - sign to have the y pointing up, such that the angle value is what is seen on the image, using trigonometric/anti-clockwise angle orientation
-            Angle = Math.atan2(dy, dx);
-            if (Angle<0){ 
-                Angle = Angle + 2*Math.PI; // return only positive angles [0;360] degrees [0;2pi] radians
+            if (rt.getCounter()!=0) { // The orientation is computed for the previous time point/row. If table was closed, last row not available to set the orientation
+                // Orientation
+                double dx = ox-prevx;
+                double dy = -(oy-prevy); // - sign to have the y pointing up, such that the angle value is what is seen on the image, using trigonometric/anti-clockwise angle orientation
+                Angle = Math.atan2(dy, dx);
+                if (Angle<0) Angle = Angle + 2*Math.PI; // return only positive angles [0;360] degrees [0;2pi] radians
+                Angle = Math.toDegrees(Angle);
+                rt.addValue("Orientation(deg)", Angle); // Add to table before incrementing counter (the orientation is calculated for the previous timepoint) -> This causes an issue if the table was closed previously
             }
-            Angle = Math.toDegrees(Angle);
-            rt.addValue("Orientation(deg)", Angle); // Add to table before incrementing counter (the orientation is calculated for the previous timepoint)
         }
         
         if (checkRef.getState()) Directionnality();
@@ -1240,7 +1240,7 @@ public class Manual_Tracking extends PlugInFrame implements ActionListener, Item
         // Add to result table
         rt.incrementCounter();
         double[] doub={Nbtrack,(img.getCurrentSlice()),ox,oy,Distance,Velocity,PixVal};
-        for (i=0; i<doub.length; i++) rt.addValue(i,doub[i]);
+        for (i=0; i<doub.length; i++) rt.addValue(head[i],doub[i]); // to fix issue when table is quit (but still issue of counter)
         
         // Show/Update result table
         rt.show("Results from "+imgtitle+" in "+choicecalxy.getItem(choicecalxy.getSelectedIndex())+" per "+choicecalt.getItem(choicecalt.getSelectedIndex()));
