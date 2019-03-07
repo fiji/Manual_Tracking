@@ -1229,7 +1229,7 @@ public class Manual_Tracking extends PlugInFrame implements ActionListener, Item
                 Angle = Math.atan2(dy, dx);
                 if (Angle<0) Angle = Angle + 2*Math.PI; // return only positive angles [0;360] degrees [0;2pi] radians
                 Angle = Math.toDegrees(Angle);
-                rt.addValue("Orientation(deg)", Angle); // Add to table before incrementing counter (the orientation is calculated for the previous timepoint) -> This causes an issue if the table was closed previously
+                rt.addValue("Orientation(deg)", Angle); // Add to table before incrementing counter (the orientation is calculated for the previous timepoint)
             }
         }
         
@@ -1240,7 +1240,7 @@ public class Manual_Tracking extends PlugInFrame implements ActionListener, Item
         // Add to result table
         rt.incrementCounter();
         double[] doub={Nbtrack,(img.getCurrentSlice()),ox,oy,Distance,Velocity,PixVal};
-        for (i=0; i<doub.length; i++) rt.addValue(head[i],doub[i]); // to fix issue when table is quit (but still issue of counter)
+        for (i=0; i<doub.length; i++) rt.addValue(head[i],doub[i]);
         
         // Show/Update result table
         rt.show("Results from "+imgtitle+" in "+choicecalxy.getItem(choicecalxy.getSelectedIndex())+" per "+choicecalt.getItem(choicecalt.getSelectedIndex()));
